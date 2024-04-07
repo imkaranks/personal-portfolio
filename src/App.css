@@ -1,0 +1,12 @@
+:root {
+  /* ###### Tokens ###### */
+  --clr-nav: white;
+  --nav-padding-block: 2rem;
+
+  --bg-hero: url(https://images.unsplash.com/photo-1681836695952-1f8073a7938d?w=1500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDMwfFdkQ2hxbHNKTjljfHxlbnwwfHx8fHw%3D);
+  --fs-hero-marquee: 10vw;
+}
+
+body {
+  font-family: "Noto Sans", sans-serif;
+}
