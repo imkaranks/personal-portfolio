@@ -164,7 +164,7 @@ export default function Works() {
                 initial="initial"
                 animate="animate"
                 exit="exit"
-                className="pointer-events-none fixed z-40 -translate-x-1/2 -translate-y-1/2 text-sm uppercase text-white"
+                className="pointer-events-none fixed z-40 -translate-x-1/2 -translate-y-1/2 text-sm text-white"
                 ref={textRef}
                 style={{ top: mouse.current.y, left: mouse.current.x }}
               >

@@ -2,7 +2,12 @@ import React from "react";
 import gsap from "gsap/gsap-core";
 import { useLayoutEffect, useRef } from "react";
 
-export default function Magnetic({ className, strength = 1, children }) {
+export default function Magnetic({
+  className,
+  strength = 1,
+  as: Component = "div",
+  children,
+}) {
   const outer = useRef(null);
   const inner = useRef(null);
 
@@ -50,11 +55,11 @@ export default function Magnetic({ className, strength = 1, children }) {
       $outer.removeEventListener("mousemove", onMouseMove);
       $outer.removeEventListener("mouseleave", onMouseLeave);
     };
-  }, []);
+  }, [strength]);
 
   return (
-    <div className={className} ref={outer}>
+    <Component className={className} ref={outer}>
       {React.cloneElement(children, { ref: inner })}
-    </div>
+    </Component>
   );
 }

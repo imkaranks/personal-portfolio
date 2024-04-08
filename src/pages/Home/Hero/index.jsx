@@ -1,11 +1,8 @@
-import { useLayoutEffect } from "react";
-import { useRef } from "react";
-import gsap from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
+import { useLayoutEffect, useRef } from "react";
+import gsap from "gsap/gsap-core";
 
 export default function Hero() {
+  const heroRef = useRef(null);
   const marquee = useRef(null);
   const first = useRef(null);
   const second = useRef(null);
@@ -16,37 +13,55 @@ export default function Hero() {
     let speed = 0.2;
     let direction = -1;
 
-    function animate() {
+    const animate = () => {
       if (xPercent <= -100) xPercent = 0;
       else if (xPercent > 0) xPercent = -100;
       gsap.set(first.current, { xPercent });
       gsap.set(second.current, { xPercent });
       xPercent += speed * direction;
       reqFrameId = requestAnimationFrame(animate);
-    }
+    };
+
     animate();
 
-    const tl = gsap.to(marquee.current, {
-      scrollTrigger: {
-        trigger: marquee.current,
-        scrub: 0.25,
-        start: "center center",
-        end: "center center",
-        onUpdate: () => (direction *= -1),
-      },
+    const ctx = gsap.context(() => {
+      gsap.to(marquee.current, {
+        scrollTrigger: {
+          trigger: marquee.current,
+          scrub: 0.25,
+          start: "center 70%",
+          end: "center 70%",
+          onUpdate: () => (direction *= -1),
+          // markers: true,
+        },
+      });
+      // gsap.to(heroRef.current, {
+      //   clipPath: "circle(0% at 50% 50%)",
+      //   scrollTrigger: {
+      //     trigger: heroRef.current,
+      //     start: "top top",
+      //     end: "bottom top",
+      //     scrub: 1,
+      //   },
+      // });
     });
 
     return () => {
       cancelAnimationFrame(reqFrameId);
-      tl.revert();
+      ctx.revert();
     };
   }, []);
 
   return (
-    <section className="relative min-h-screen bg-[#050505] bg-[image:var(--bg-hero)] bg-contain bg-center bg-no-repeat text-white">
+    <section
+      // className="hero | absolute left-0 top-0 z-10 min-h-screen w-full bg-[#050505] bg-[image:var(--bg-hero)] bg-cover bg-center bg-no-repeat text-white"
+      className="hero | relative z-10 min-h-screen w-full bg-[#050505] bg-[image:var(--bg-hero)] bg-cover bg-center bg-no-repeat text-white"
+      ref={heroRef}
+      // style={{ clipPath: "circle(100% at 50% 50%)" }}
+    >
       <div className="container mx-auto">
         <div
-          className="absolute bottom-[5%] left-0 w-full whitespace-nowrap text-[length:var(--fs-hero-marquee)] font-semibold mix-blend-difference"
+          className="hero__marquee | absolute bottom-[5%] left-0 w-full whitespace-nowrap text-[length:var(--fs-hero-marquee)] font-medium mix-blend-difference"
           ref={marquee}
         >
           <p className="inline-block px-[0.15em]" ref={first}>

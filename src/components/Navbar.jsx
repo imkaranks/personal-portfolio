@@ -49,18 +49,18 @@ export default function Navbar() {
           <nav>
             <ul className="flex list-none items-center gap-[5vw]">
               <li>
-                <Magnetic>
+                <Magnetic className="relative before:pointer-events-none before:absolute before:-bottom-4 before:left-1/2 before:aspect-square before:w-1.5 before:-translate-x-1/2 before:scale-0 before:rounded-full before:bg-white before:transition-transform before:content-[''] hover:before:scale-100">
                   <Link to={""}>Home</Link>
                 </Magnetic>
               </li>
               <li>
-                <Magnetic>
-                  <Link to={""}>About</Link>
+                <Magnetic className="relative before:pointer-events-none before:absolute before:-bottom-4 before:left-1/2 before:aspect-square before:w-1.5 before:-translate-x-1/2 before:scale-0 before:rounded-full before:bg-white before:transition-transform before:content-[''] hover:before:scale-100">
+                  <Link to={"/about"}>About</Link>
                 </Magnetic>
               </li>
               <li>
-                <Magnetic>
-                  <Link to={""}>Works</Link>
+                <Magnetic className="relative before:pointer-events-none before:absolute before:-bottom-4 before:left-1/2 before:aspect-square before:w-1.5 before:-translate-x-1/2 before:scale-0 before:rounded-full before:bg-white before:transition-transform before:content-[''] hover:before:scale-100">
+                  <Link to={"/works"}>Works</Link>
                 </Magnetic>
               </li>
             </ul>
@@ -71,7 +71,7 @@ export default function Navbar() {
           className="fixed right-8 top-8 z-50 aspect-square w-16 scale-[--scale] transition-transform duration-300"
           style={{
             "--scale": hidden ? 0 : 1,
-            "--bg": !showMenu ? colors.neutral[600] : colors.indigo[600],
+            "--bg": !showMenu ? colors.neutral[700] : colors.indigo[600],
             transitionTimingFunction: "cubic-bezier(0.76, 0, 0.24, 1)",
           }}
           ref={hamburgerRef}
@@ -111,52 +111,70 @@ export default function Navbar() {
 
         <AnimatePresence mode="wait">
           {!hidden && showMenu && (
-            <motion.div
-              className="fixed right-0 top-0 z-40 grid h-full w-3/5 max-w-[30rem] items-center bg-neutral-900"
-              initial={{ x: "250%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "250%" }}
-              transition={{
-                duration: 0.8,
-                ease: [0.76, 0, 0.24, 1],
-              }}
-            >
+            <>
               <motion.div
-                className="absolute -top-[25%] left-0 -z-10 aspect-square h-[150%] origin-center -translate-x-1/2 rounded-full bg-neutral-900"
-                initial={{ scaleX: 0.5, x: "-50%" }}
-                animate={{ scaleX: 0, x: "-50%" }}
-                exit={{ scaleX: 0.5, x: "-50%", duration: 1 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
                 transition={{
                   duration: 0.8,
                   ease: [0.76, 0, 0.24, 1],
                 }}
+                className="fixed left-0 top-0 h-full w-full bg-black/10"
               ></motion.div>
-              <div className="mx-auto w-3/5">
-                <div className="border-b pb-8 text-xs uppercase tracking-wider">
-                  Navigation
-                </div>
+              <motion.div
+                className="fixed right-0 top-0 z-40 grid h-full w-3/5 max-w-[30rem] items-center bg-neutral-900"
+                initial={{ x: "250%" }}
+                animate={{ x: 0 }}
+                exit={{ x: "250%" }}
+                transition={{
+                  duration: 0.8,
+                  ease: [0.76, 0, 0.24, 1],
+                }}
+              >
+                <motion.div
+                  className="absolute -top-[25%] left-0 -z-10 aspect-square h-[150%] origin-center -translate-x-1/2 rounded-full bg-neutral-900"
+                  initial={{ scaleX: 0.5, x: "-50%" }}
+                  animate={{ scaleX: 0, x: "-50%" }}
+                  exit={{ scaleX: 0.5, x: "-50%", duration: 1 }}
+                  transition={{
+                    duration: 0.8,
+                    ease: [0.76, 0, 0.24, 1],
+                  }}
+                ></motion.div>
+                <div className="mx-auto w-3/5">
+                  <div className="border-b pb-8 text-xs uppercase tracking-wider">
+                    Navigation
+                  </div>
 
-                <div>
-                  <div className="grid gap-4 py-8 text-5xl">
-                    {["Home", "About", "Works"].map((item, i) => (
-                      <motion.div
-                        key={i}
-                        initial={{ x: 100 }}
-                        animate={{ x: 0 }}
-                        exit={{ x: 100 }}
-                        transition={{
-                          delay: 0.075 * i,
-                          duration: 0.8,
-                          ease: [0.76, 0, 0.24, 1],
-                        }}
-                      >
-                        {item}
-                      </motion.div>
-                    ))}
+                  <div>
+                    <div className="grid gap-4 py-8 text-5xl">
+                      {["Home", "About", "Works"].map((item, i) => (
+                        <motion.div
+                          className="cursor-pointer"
+                          key={i}
+                          initial={{ x: 100 }}
+                          animate={{ x: 0 }}
+                          exit={{ x: 100 }}
+                          transition={{
+                            delay: 0.075 * i,
+                            duration: 0.8,
+                            ease: [0.76, 0, 0.24, 1],
+                          }}
+                        >
+                          <Magnetic
+                            className="relative w-fit before:pointer-events-none before:absolute before:-left-8 before:top-1/2 before:aspect-square before:w-2.5 before:-translate-y-1/2 before:scale-0 before:rounded-full before:bg-white before:transition-transform before:content-[''] hover:before:scale-100"
+                            strength={0.2}
+                          >
+                            <span>{item}</span>
+                          </Magnetic>
+                        </motion.div>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            </>
           )}
         </AnimatePresence>
       </div>

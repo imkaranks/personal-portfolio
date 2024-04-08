@@ -8,35 +8,38 @@ export default function Footer() {
   const buttonRef = useRef(null);
 
   useLayoutEffect(() => {
-    const tl = gsap
-      .timeline()
-      .to(
-        circRef.current,
-        {
-          scaleY: 0,
-          scrollTrigger: {
-            trigger: footerRef.current,
-            start: "top 90%",
-            end: "50% 90%",
-            scrub: 1,
+    const ctx = gsap.context(() => {
+      gsap
+        .timeline()
+        .to(
+          circRef.current,
+          {
+            scaleY: 0,
+            scrollTrigger: {
+              trigger: footerRef.current,
+              start: "top 90%",
+              end: "50% 90%",
+              scrub: 1,
+            },
           },
-        },
-        0,
-      )
-      .to(
-        buttonRef.current,
-        {
-          right: "10%",
-          scrollTrigger: {
-            trigger: footerRef.current,
-            start: "top 60%",
-            end: "50% 60%",
-            scrub: 1,
+          0,
+        )
+        .to(
+          buttonRef.current,
+          {
+            right: "10%",
+            scrollTrigger: {
+              trigger: footerRef.current,
+              start: "top 60%",
+              end: "50% 60%",
+              scrub: 1,
+            },
           },
-        },
-        0,
-      );
-    return () => tl?.revert();
+          0,
+        );
+    }, footerRef.current);
+
+    return () => ctx.revert();
   }, []);
 
   return (
@@ -45,14 +48,16 @@ export default function Footer() {
       ref={footerRef}
     >
       <div
-        className="absolute left-[-25%] top-0 aspect-square w-[150%] -translate-y-1/2 rounded-full bg-white"
+        className="absolute left-[-25%] top-0 z-10 aspect-square w-[150%] -translate-y-1/2 rounded-full bg-white shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px]"
         ref={circRef}
       ></div>
       <div className="mx-auto w-4/5">
         <div className="relative mb-16 border-b-2 border-b-white/10 pb-[3em] text-white">
           <div className="text-5xl font-semibold">
             <div className="aspect-square w-8 rounded-full"></div>
-            <h2>Let&apos;s work together</h2>
+            <h2 className="max-w-[23ch]">
+              Got an interesting project? I can help you.
+            </h2>
           </div>
 
           <div
