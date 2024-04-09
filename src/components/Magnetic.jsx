@@ -1,6 +1,8 @@
-import React from "react";
 import gsap from "gsap/gsap-core";
+import PropTypes from "prop-types";
+import React from "react";
 import { useLayoutEffect, useRef } from "react";
+import isTouchDevice from "@utils/isTouchDevice";
 
 export default function Magnetic({
   className,
@@ -8,58 +10,70 @@ export default function Magnetic({
   as: Component = "div",
   children,
 }) {
-  const outer = useRef(null);
-  const inner = useRef(null);
+  const magneticOuterRef = useRef(null);
+  const magneticInnerRef = useRef(null);
 
   useLayoutEffect(() => {
-    const $outer = outer.current;
-    const $inner = inner.current;
-    const outerXTo = gsap.quickTo($outer, "x", {
+    if (isTouchDevice()) return;
+
+    const $magneticOuter = magneticOuterRef.current;
+    const $magneticInner = magneticInnerRef.current;
+
+    const magnetOutXTo = gsap.quickTo($magneticOuter, "x", {
       duration: 1,
       ease: "elastic.out(1, 0.3)",
     });
-    const outerYTo = gsap.quickTo($outer, "y", {
+    const magnetOutYTo = gsap.quickTo($magneticOuter, "y", {
       duration: 1,
       ease: "elastic.out(1, 0.3)",
     });
-    const innerXTo = gsap.quickTo($inner, "x", {
+    const magnetInXTo = gsap.quickTo($magneticInner, "x", {
       duration: 1,
       ease: "elastic.out(1, 0.3)",
     });
-    const innerYTo = gsap.quickTo($inner, "y", {
+    const magnetInYTo = gsap.quickTo($magneticInner, "y", {
       duration: 1,
       ease: "elastic.out(1, 0.3)",
     });
 
-    function onMouseMove(event) {
-      const { width, height, left, top } = $outer.getBoundingClientRect();
+    const onMouseMove = (event) => {
+      const { width, height, left, top } =
+        $magneticOuter.getBoundingClientRect();
       const x = event.clientX - (left + width / 2);
       const y = event.clientY - (top + height / 2);
 
-      outerXTo(x * strength);
-      outerYTo(y * strength);
-      innerXTo(x * (strength * 0.5));
-      innerYTo(y * (strength * 0.5));
-    }
-    function onMouseLeave() {
-      outerXTo(0);
-      outerYTo(0);
-      innerXTo(0);
-      innerYTo(0);
-    }
+      magnetOutXTo(x * strength);
+      magnetOutYTo(y * strength);
+      magnetInXTo(x * (strength * 0.5));
+      magnetInYTo(y * (strength * 0.5));
+    };
 
-    $outer.addEventListener("mousemove", onMouseMove);
-    $outer.addEventListener("mouseleave", onMouseLeave);
+    const onMouseLeave = () => {
+      magnetOutXTo(0);
+      magnetOutYTo(0);
+      magnetInXTo(0);
+      magnetInYTo(0);
+    };
+
+    $magneticOuter.addEventListener("mousemove", onMouseMove);
+    $magneticOuter.addEventListener("mouseleave", onMouseLeave);
 
     return () => {
-      $outer.removeEventListener("mousemove", onMouseMove);
-      $outer.removeEventListener("mouseleave", onMouseLeave);
+      $magneticOuter.removeEventListener("mousemove", onMouseMove);
+      $magneticOuter.removeEventListener("mouseleave", onMouseLeave);
     };
   }, [strength]);
 
   return (
-    <Component className={className} ref={outer}>
-      {React.cloneElement(children, { ref: inner })}
+    <Component className={className} ref={magneticOuterRef}>
+      {React.cloneElement(children, { ref: magneticInnerRef })}
     </Component>
   );
 }
+
+Magnetic.propTypes = {
+  className: PropTypes.string,
+  strength: PropTypes.number,
+  as: PropTypes.elementType,
+  children: PropTypes.node.isRequired,
+};

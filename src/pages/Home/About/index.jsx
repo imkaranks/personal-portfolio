@@ -1,6 +1,7 @@
-import { useLayoutEffect, useRef } from "react";
-import gsap from "gsap/gsap-core";
-import RevealText from "@components/RevealText";
+// import gsap from "gsap/gsap-core";
+import { useRef } from "react";
+import TextUnveiler from "@components/TextUnveiler";
+
 // import Magnetic from "@components/Magnetic";
 
 export default function About() {
@@ -30,7 +31,7 @@ export default function About() {
 
   return (
     <section
-      className="about relative grid min-h-screen items-center overflow-hidden py-24"
+      className="about relative grid min-h-screen items-center overflow-hidden py-12 supports-[min-height:100svh]:min-h-[100svh] sm:py-16 md:py-20 lg:py-24"
       ref={aboutRef}
     >
       {/* <div
@@ -40,21 +41,21 @@ export default function About() {
       <div className="mx-auto flex w-4/5 items-center justify-between gap-8 max-md:flex-col-reverse">
         <div className="max-w-[60ch] space-y-6">
           <h2 className="text-4xl font-semibold md:grid md:text-5xl xl:text-6xl 2xl:text-7xl md:[&>span:last-child]:pl-[0.75em]">
-            <RevealText as="span">Karan</RevealText>{" "}
-            <RevealText as="span">Sethi</RevealText>
+            <TextUnveiler as="span">Karan</TextUnveiler>{" "}
+            <TextUnveiler as="span">Sethi</TextUnveiler>
           </h2>
-          <RevealText className="md:pl-[6em]" as="p">
+          <TextUnveiler className="md:pl-[6em]" as="p">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem dolorum
             unde, nulla ipsum totam commodi doloribus et minima voluptatem
             debitis fuga suscipit cum enim veniam corporis soluta culpa, nisi
             reiciendis!
-          </RevealText>
-          <RevealText className="md:pl-[6em]" as="p">
+          </TextUnveiler>
+          <TextUnveiler className="md:pl-[6em]" as="p">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem dolorum
             unde, nulla ipsum totam commodi doloribus et minima voluptatem
             debitis fuga suscipit cum enim veniam corporis soluta culpa, nisi
             reiciendis!
-          </RevealText>
+          </TextUnveiler>
         </div>
         <div className="w-full md:max-w-[20rem]">
           <img

@@ -1,83 +1,43 @@
-import gsap from "gsap/gsap-core";
+import { motion, AnimatePresence } from "framer-motion";
+import gsap from "gsap";
 import { useState } from "react";
 import { useRef } from "react";
 import { useLayoutEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import projects from "@constants/projects";
 import { scaleModal } from "@utils/animations";
+import isTouchDevice from "@utils/isTouchDevice";
 
-const projects = [
-  {
-    title: "Two Good Co",
-    desc: "Frontend development",
-    image:
-      "https://images.unsplash.com/photo-1712007426396-08068359b6c7?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHx8",
-  },
-  {
-    title: "Canvas",
-    desc: "Frontend development",
-    image:
-      "https://images.unsplash.com/photo-1712415406482-e75e0afa2b02?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHx8",
-  },
-  {
-    title: "Chat App",
-    desc: "Frontend development",
-    image:
-      "https://images.unsplash.com/photo-1712313127701-dd6fde97f5d3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw4fHx8ZW58MHx8fHx8",
-  },
-];
+const isTouchEnabled = isTouchDevice();
 
 export default function Works() {
   const projectsRef = useRef(null);
   const modalRef = useRef(null);
-  const circRef = useRef(null);
-  const textRef = useRef(null);
+  const cursorRef = useRef(null);
+  const cursorLabelRef = useRef(null);
+  const mouse = useRef({
+    x: innerWidth * 0.5,
+    y: innerHeight * 0.5,
+  });
 
   const [showModal, setShowModal] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  const mouse = useRef({
-    x: 0,
-    y: 0,
-  });
-
   useLayoutEffect(() => {
+    if (isTouchEnabled) return;
+
     const $projects = projectsRef.current;
     let tl;
 
-    function onMouseMove(event) {
-      mouse.current.x = event.clientX;
-      mouse.current.y = event.clientY;
+    const onMouseMove = ({ clientX, clientY }) => {
+      const x = (mouse.current.x = clientX);
+      const y = (mouse.current.y = clientY);
 
       tl = gsap
-        .timeline()
-        .to(
-          modalRef.current,
-          {
-            top: mouse.current.y,
-            left: mouse.current.x,
-            duration: 0.65,
-          },
-          0,
-        )
-        .to(
-          circRef.current,
-          {
-            top: mouse.current.y,
-            left: mouse.current.x,
-            duration: 0.4,
-          },
-          0,
-        )
-        .to(
-          textRef.current,
-          {
-            top: mouse.current.y,
-            left: mouse.current.x,
-            duration: 0.35,
-          },
-          0,
-        );
-    }
+        .timeline({ ease: "power3" })
+        .to(modalRef.current, { top: y, left: x, duration: 0.65 }, 0)
+        .to(cursorRef.current, { top: y, left: x, duration: 0.4 }, 0)
+        .to(cursorLabelRef.current, { top: y, left: x, duration: 0.35 }, 0);
+    };
 
     $projects.addEventListener("mousemove", onMouseMove);
 
@@ -88,7 +48,7 @@ export default function Works() {
   }, []);
 
   return (
-    <section className="relative min-h-screen py-24">
+    <section className="relative min-h-screen py-12 supports-[min-height:100svh]:min-h-[100svh] sm:py-16 md:py-20 lg:py-24">
       <div className="mx-auto w-11/12 md:w-10/12">
         <header className="border-b pb-8 text-sm uppercase text-black/50">
           <h2 className="mx-auto w-11/12">Recent Works</h2>
@@ -103,11 +63,11 @@ export default function Works() {
           {projects.map((project, i) => (
             <div
               key={i}
-              className="group py-[1em] text-4xl md:text-5xl"
+              className="group py-[1em] text-2xl sm:text-3xl md:text-4xl lg:text-5xl"
               onMouseEnter={() => setCurrentSlide(i)}
             >
               <div className="mx-auto flex w-11/12 items-center justify-between">
-                <p className="text-4xl font-medium uppercase transition-transform duration-300 ease-in-out group-hover:-translate-x-4 group-hover:text-black/40 md:text-5xl">
+                <p className="text-2xl font-medium uppercase transition-transform duration-300 ease-in-out group-hover:-translate-x-4 group-hover:text-black/40 sm:text-3xl md:text-4xl lg:text-5xl">
                   {project.title}
                 </p>
                 <p className="text-sm capitalize transition-transform duration-300 ease-in-out group-hover:translate-x-4 group-hover:text-black/40 md:text-base">
@@ -119,7 +79,7 @@ export default function Works() {
         </div>
 
         <AnimatePresence>
-          {showModal && (
+          {!isTouchEnabled && showModal && (
             <>
               <motion.div
                 className="pointer-events-none fixed z-40 aspect-square w-[20rem] -translate-x-1/2 -translate-y-1/2 overflow-hidden"
@@ -156,7 +116,7 @@ export default function Works() {
                 initial="initial"
                 animate="animate"
                 exit="exit"
-                ref={circRef}
+                ref={cursorRef}
                 style={{ top: mouse.current.y, left: mouse.current.x }}
               ></motion.div>
               <motion.span
@@ -165,7 +125,7 @@ export default function Works() {
                 animate="animate"
                 exit="exit"
                 className="pointer-events-none fixed z-40 -translate-x-1/2 -translate-y-1/2 text-sm text-white"
-                ref={textRef}
+                ref={cursorLabelRef}
                 style={{ top: mouse.current.y, left: mouse.current.x }}
               >
                 View

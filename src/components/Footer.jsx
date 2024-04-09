@@ -1,6 +1,6 @@
+import Magnetic from "./Magnetic";
 import gsap from "gsap/gsap-core";
 import { useLayoutEffect, useRef } from "react";
-import Magnetic from "./Magnetic";
 
 export default function Footer() {
   const footerRef = useRef(null);
@@ -44,7 +44,7 @@ export default function Footer() {
 
   return (
     <footer
-      className="relative min-h-screen overflow-hidden bg-neutral-900 py-24 text-white"
+      className="min-h-screenn ssupports-[min-height:100svh]:min-h-[100svh] relative overflow-hidden bg-neutral-900 py-8 text-white sm:py-12 md:py-16 lg:py-20 xl:py-24"
       ref={footerRef}
     >
       <div
@@ -53,7 +53,7 @@ export default function Footer() {
       ></div>
       <div className="mx-auto w-4/5">
         <div className="relative mb-16 border-b-2 border-b-white/10 pb-[3em] text-white">
-          <div className="text-5xl font-semibold">
+          <div className="text-2xl font-semibold sm:text-3xl md:text-4xl lg:text-5xl">
             <div className="aspect-square w-8 rounded-full"></div>
             <h2 className="max-w-[23ch]">
               Got an interesting project? I can help you.
@@ -61,7 +61,7 @@ export default function Footer() {
           </div>
 
           <div
-            className="absolute bottom-0 right-[20%] aspect-square w-fit translate-y-1/2"
+            className="absolute bottom-0 right-[20%] aspect-square w-fit translate-y-1/2 text-xs md:text-sm lg:text-base"
             ref={buttonRef}
           >
             <Magnetic className="grid h-full place-content-center rounded-full bg-indigo-600 p-[1em]">
@@ -70,21 +70,50 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="my-8 flex gap-6">
+        <div className="my-8 flex gap-4 text-xs max-md:flex-wrap md:gap-6 md:text-sm lg:text-base">
           <Magnetic
             strength={0.2}
             className="rounded-full border-2 border-white/10 p-[1em_2em]"
           >
-            <span className="pointer-events-none">
-              Lorem ipsum dolor sit amet.
-            </span>
+            <span className="pointer-events-none">karansethi123@test.com</span>
           </Magnetic>
           <Magnetic
             strength={0.2}
             className="rounded-full border-2 border-white/10 p-[1em_2em]"
           >
-            <span className="pointer-events-none">Lorem, ipsum.</span>
+            <span className="pointer-events-none">9876543210</span>
           </Magnetic>
+        </div>
+
+        <div className="mt-12 max-md:space-y-6 md:mt-16 md:flex lg:mt-20">
+          <div className="footer__item basis-80">
+            <h3 className="footer__subtitle mb-1 text-white/40 max-md:text-sm md:mb-2">
+              Connect with me
+            </h3>
+            <p>ln @imkaran</p>
+          </div>
+          <div className="footer__item flex-1 basis-80 md:text-right">
+            <h3 className="footer__subtitle mb-1 text-white/40 max-md:text-sm md:mb-2">
+              Follow me
+            </h3>
+            <ul className="flex items-center gap-6 md:justify-end" role="list">
+              <li>
+                <a href="javascript:void(0)">.github</a>
+              </li>
+              <li>
+                <a href="javascript:void(0)">.github</a>
+              </li>
+              <li>
+                <a href="javascript:void(0)">.github</a>
+              </li>
+            </ul>
+          </div>
+          <div className="footer__item basis-80 md:text-right">
+            <h3 className="footer__subtitle mb-1 text-white/40 max-md:text-sm md:mb-2">
+              Say hello
+            </h3>
+            <p>karan@test.com</p>
+          </div>
         </div>
       </div>
     </footer>

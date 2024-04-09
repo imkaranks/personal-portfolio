@@ -1,8 +1,9 @@
-import { useLayoutEffect, useRef } from "react";
+// import gsap from "gsap/gsap-core";
+import { useRef } from "react";
+import About from "@pages/Home/About";
 import Hero from "@pages/Home/Hero";
 import Works from "@pages/Home/Works";
-import About from "@pages/Home/About";
-import gsap from "gsap/gsap-core";
+
 // import ScrollTrigger from "gsap/ScrollTrigger";
 
 export default function Home() {
