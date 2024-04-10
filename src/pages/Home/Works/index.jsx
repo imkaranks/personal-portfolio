@@ -1,8 +1,6 @@
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import gsap from "gsap";
-import { useState } from "react";
-import { useRef } from "react";
-import { useLayoutEffect } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import projects from "@constants/projects";
 import { scaleModal } from "@utils/animations";
 import isTouchDevice from "@utils/isTouchDevice";

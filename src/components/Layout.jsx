@@ -1,12 +1,12 @@
-import { useLayoutEffect, useRef } from "react";
-import { Outlet, useLocation } from "react-router-dom";
-import Header from "@components/Header";
-import Footer from "@components/Footer";
+import { motion } from "framer-motion";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
-import { motion } from "framer-motion";
+import { useLayoutEffect, useRef } from "react";
+import { Outlet, useLocation } from "react-router-dom";
 import { pageTransition } from "@utils/animations";
 import isTouchDevice from "@utils/isTouchDevice";
+import Footer from "@components/Footer";
+import Header from "@components/Header";
 
 const isTouchEnabled = isTouchDevice();
 

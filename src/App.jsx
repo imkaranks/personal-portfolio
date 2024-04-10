@@ -2,8 +2,8 @@ import "./App.css";
 import { AnimatePresence } from "framer-motion";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import gsap from "gsap/gsap-core";
-import { useLayoutEffect, Suspense, lazy } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Suspense, lazy, useLayoutEffect } from "react";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Layout from "@components/Layout";
 
 const Home = lazy(() => import("@pages/Home"));
@@ -29,7 +29,7 @@ export default function App() {
   return (
     <Suspense
       fallback={
-        <h1 className="grid min-h-screen supports-[min-height:100svh]:min-h-[100svh] place-items-center text-2xl font-medium">
+        <h1 className="grid min-h-screen place-items-center text-2xl font-medium supports-[min-height:100svh]:min-h-[100svh]">
           Loading...
         </h1>
       }
